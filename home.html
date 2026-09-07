@@ -1,0 +1,1612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dooms Day QCAB Generator</title>
+
+    <style>
+        :root {
+            --bg: #eef4fb;
+            --bg-soft: #f7faff;
+            --card: rgba(255, 255, 255, 0.88);
+            --card-solid: #ffffff;
+
+            --text: #172033;
+            --muted: #5f6b7a;
+            --border: rgba(100, 116, 139, 0.18);
+
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+            --violet: #7c3aed;
+            --cyan: #06b6d4;
+
+            --shadow: 0 20px 60px rgba(30, 64, 175, 0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(96, 165, 250, 0.20),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(124, 58, 237, 0.13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(6, 182, 212, 0.10),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           TOP ANNOUNCEMENT BAR
+        ========================================= */
+
+        .announcement-bar {
+            width: 100%;
+            height: 38px;
+
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+
+            background: rgba(255, 255, 255, 0.72);
+
+            border-bottom: 1px solid rgba(100, 116, 139, 0.12);
+
+            cursor: pointer;
+
+            position: relative;
+            z-index: 101;
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .announcement-track {
+            display: flex;
+            width: max-content;
+
+            animation: announcementMove 18s linear infinite;
+        }
+
+        .announcement-text {
+            display: block;
+
+            padding-right: 80px;
+
+            color: #4e5f85;
+
+            font-size: 15px;
+            font-weight: 1000;
+
+            letter-spacing: 0.8px;
+
+            white-space: nowrap;
+        }
+
+        @keyframes announcementMove {
+            from {
+                transform: translateX(100vw);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .announcement-bar:hover .announcement-track {
+            animation-play-state: paused;
+        }
+
+        /* =========================================
+           ANIMATED BACKGROUND
+        ========================================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -20%;
+            z-index: -2;
+
+            background:
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(37, 99, 235, 0.07),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(124, 58, 237, 0.06),
+                    transparent 25%
+                );
+
+            animation: backgroundMove 14s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                transform: translate3d(-2%, -1%, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(2%, 2%, 0) scale(1.05);
+            }
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            background: rgba(247, 250, 255, 0.78);
+            border-bottom: 1px solid rgba(100, 116, 139, 0.12);
+        }
+
+        .nav {
+            max-width: 1180px;
+            margin: auto;
+
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+
+            color: #172033;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            max-width: 1000px;
+            margin: auto;
+
+            text-align: center;
+
+            padding: 105px 24px 90px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 8px 15px;
+
+            border-radius: 999px;
+
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+
+            color: #2563eb;
+
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+
+            margin-bottom: 24px;
+
+            animation: fadeDown 0.8s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 78px);
+            line-height: 1.02;
+
+            letter-spacing: -3px;
+
+            font-weight: 900;
+
+            margin-bottom: 25px;
+
+            animation: fadeUp 0.9s ease forwards;
+        }
+
+        .hero h1 span {
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #7c3aed,
+                    #06b6d4,
+                    #2563eb
+                );
+
+            background-size: 250% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            animation: gradientMove 6s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 250% center;
+            }
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: auto;
+
+            font-size: 18px;
+            line-height: 1.75;
+
+            color: var(--muted);
+
+            animation: fadeUp 1s ease 0.15s both;
+        }
+
+        /* =========================================
+           GENERAL SECTIONS
+        ========================================= */
+
+        section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 85px 24px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+
+            color: var(--blue);
+
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.1;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 18px;
+        }
+
+        .section-description {
+            max-width: 720px;
+
+            color: var(--muted);
+
+            line-height: 1.75;
+            font-size: 16px;
+        }
+
+        /* =========================================
+           PROBLEMS
+        ========================================= */
+
+        .problem-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+
+            margin-top: 42px;
+        }
+
+        .problem-card {
+            position: relative;
+
+            padding: 32px;
+
+            border-radius: 22px;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+
+            opacity: 0;
+            transform: translateY(55px);
+
+            transition:
+                transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.75s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .problem-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .problem-card:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        .problem-card:nth-child(3) {
+            transition-delay: 0.24s;
+        }
+
+        .problem-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            right: -50px;
+            top: -50px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(37, 99, 235, 0.14),
+                    transparent 70%
+                );
+
+            border-radius: 50%;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 25px 65px rgba(30, 64, 175, 0.15);
+        }
+
+        .problem-number {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+
+            color: var(--blue);
+
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            font-size: 21px;
+            line-height: 1.3;
+
+            margin-bottom: 15px;
+        }
+
+        .problem-card p {
+            color: var(--muted);
+
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* =========================================
+           SOLUTION
+        ========================================= */
+
+        .solution {
+            padding-top: 30px;
+        }
+
+        .solution-box {
+            position: relative;
+
+            margin-top: 40px;
+
+            padding: 55px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.96),
+                    rgba(239,246,255,0.92)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.20);
+
+            box-shadow:
+                0 25px 70px rgba(30, 64, 175, 0.11);
+
+            overflow: hidden;
+
+            opacity: 0;
+            transform: translateY(45px) scale(0.96);
+
+            transition:
+                opacity 0.85s ease,
+                transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .solution-box.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .solution-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            right: -130px;
+            bottom: -160px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(124, 58, 237, 0.10),
+                    transparent 70%
+                );
+
+            border-radius: 50%;
+        }
+
+        .solution-content {
+            width: 58%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .solution-box h3 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .solution-box p {
+            max-width: 760px;
+
+            color: var(--muted);
+
+            line-height: 1.8;
+        }
+
+        .feature-pills {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 28px;
+        }
+
+        .pill {
+            padding: 9px 15px;
+
+            border-radius: 999px;
+
+            background: rgba(37, 99, 235, 0.07);
+
+            border: 1px solid rgba(37, 99, 235, 0.12);
+
+            color: #315b9d;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================================
+           DID YOU KNOW
+        ========================================= */
+
+        .did-you-know {
+            position: absolute;
+
+            right: 45px;
+            top: 50%;
+
+            width: 32%;
+            max-width: 340px;
+
+            padding: 25px 27px;
+
+            transform:
+                translateY(-50%)
+                rotate(2deg);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.98),
+                    rgba(239,246,255,0.95)
+                );
+
+            border: 1px solid rgba(37, 99, 235, 0.16);
+
+            box-shadow:
+                0 18px 45px rgba(30, 64, 175, 0.13);
+
+            z-index: 3;
+
+            animation: didYouKnowFloat 4s ease-in-out infinite;
+        }
+
+        .did-you-know::before {
+            content: "";
+
+            position: absolute;
+
+            width: 80px;
+            height: 80px;
+
+            right: -25px;
+            top: -25px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(6, 182, 212, 0.16),
+                    transparent 70%
+                );
+        }
+
+        .did-you-know-label {
+            display: inline-block;
+
+            margin-bottom: 13px;
+
+            padding: 6px 11px;
+
+            border-radius: 999px;
+
+            background: rgba(37, 99, 235, 0.09);
+
+            color: #2563eb;
+
+            font-size: 11px;
+            font-weight: 900;
+
+            letter-spacing: 1.5px;
+        }
+
+        .did-you-know h4 {
+            font-size: 20px;
+
+            line-height: 1.3;
+
+            margin-bottom: 12px;
+        }
+
+        .did-you-know p {
+            font-size: 14px;
+
+            line-height: 1.65;
+
+            color: var(--muted);
+
+            margin: 0;
+        }
+
+        .did-you-know strong {
+            color: #2563eb;
+            font-weight: 900;
+        }
+
+        @keyframes didYouKnowFloat {
+            0%,
+            100% {
+                transform:
+                    translateY(-50%)
+                    rotate(2deg);
+            }
+
+            50% {
+                transform:
+                    translateY(calc(-50% - 6px))
+                    rotate(0deg);
+            }
+        }
+
+        /* =========================================
+           HOW IT WORKS
+        ========================================= */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+
+            margin-top: 45px;
+        }
+
+        .step {
+            position: relative;
+
+            padding: 35px;
+
+            background: rgba(255,255,255,0.78);
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            box-shadow: 0 15px 45px rgba(30, 64, 175, 0.07);
+
+            opacity: 0;
+            transform: translateY(50px);
+
+            transition:
+                opacity 0.75s ease,
+                transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.3s ease;
+        }
+
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        .step:nth-child(3) {
+            transition-delay: 0.24s;
+        }
+
+        .step:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 25px 55px rgba(30, 64, 175, 0.12);
+        }
+
+        .step-number {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-weight: 900;
+
+            margin-bottom: 23px;
+
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.20);
+        }
+
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* =========================================
+           SUBJECTS
+        ========================================= */
+
+        .subjects {
+            padding-top: 40px;
+
+            scroll-margin-top: 120px;
+        }
+
+        .subject-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-top: 42px;
+        }
+
+        .subject-card {
+            position: relative;
+
+            padding: 28px;
+
+            min-height: 190px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            background: rgba(255,255,255,0.85);
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 40px rgba(30, 64, 175, 0.07);
+
+            opacity: 0;
+            transform: translateY(55px) scale(0.94);
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.3s ease;
+        }
+
+        .subject-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .subject-card:nth-child(2) {
+            transition-delay: 0.10s;
+        }
+
+        .subject-card:nth-child(3) {
+            transition-delay: 0.20s;
+        }
+
+        .subject-card:nth-child(4) {
+            transition-delay: 0.30s;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-7px);
+            box-shadow:
+                0 25px 60px rgba(30, 64, 175, 0.12);
+        }
+
+        .subject-name {
+            font-size: 23px;
+            font-weight: 850;
+
+            margin-bottom: 8px;
+        }
+
+        .subject-status {
+            font-size: 12px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            color: #64748b;
+        }
+
+        .subject-status.live {
+            color: #059669;
+        }
+
+        .subject-button {
+            margin-top: 22px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 11px 17px;
+
+            border-radius: 12px;
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .subject-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(37, 99, 235, 0.25);
+        }
+
+        .subject-button.disabled {
+            background: #e2e8f0;
+            color: #64748b;
+            cursor: default;
+        }
+
+        .subject-button.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            margin-top: 50px;
+
+            padding: 35px 24px;
+
+            text-align: center;
+
+            border-top:
+                1px solid rgba(100, 116, 139, 0.13);
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            background: rgba(247,250,255,0.65);
+        }
+
+        /* =========================================
+           ANIMATIONS
+        ========================================= */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .problem-grid,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .solution-box {
+                padding: 38px;
+            }
+
+            .solution-content {
+                width: 100%;
+            }
+
+            .did-you-know {
+                position: relative;
+
+                right: auto;
+                top: auto;
+
+                width: 100%;
+                max-width: none;
+
+                margin-top: 35px;
+
+                transform: rotate(1deg);
+
+                animation: didYouKnowFloatMobile 4s ease-in-out infinite;
+            }
+
+            @keyframes didYouKnowFloatMobile {
+                0%,
+                100% {
+                    transform: rotate(1deg);
+                }
+
+                50% {
+                    transform: translateY(-5px) rotate(0deg);
+                }
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .announcement-bar {
+                height: 34px;
+            }
+
+            .announcement-text {
+                font-size: 11px;
+            }
+
+            .nav {
+                height: 64px;
+                padding: 0 18px;
+            }
+
+            .logo {
+                font-size: 15px;
+            }
+
+            .tagline {
+                display: none;
+            }
+
+            .hero {
+                padding:
+                    75px 20px
+                    65px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            section {
+                padding:
+                    65px 20px;
+            }
+
+            .problem-card,
+            .step {
+                padding: 27px;
+            }
+
+            .solution-box {
+                padding: 30px 25px;
+            }
+
+            .solution-box h3 {
+                font-size: 25px;
+            }
+
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-card {
+                min-height: 165px;
+            }
+
+            .did-you-know {
+                padding: 23px;
+            }
+
+            .did-you-know h4 {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         TOP ANNOUNCEMENT BAR
+    ========================================= -->
+
+    <div
+        class="announcement-bar"
+        onclick="document.getElementById('subjects-section').scrollIntoView({ behavior: 'smooth' });"
+        title="Go to Anthropology"
+    >
+        <div class="announcement-track">
+
+            <span class="announcement-text">
+               Click here to check out Anthropology QCAB generator — currently live
+            </span>
+
+            <span class="announcement-text">
+               Click here to check out Anthropology QCAB generator — currently live
+            </span>
+
+            <span class="announcement-text">
+                Click here to check out Anthropology QCAB generator — currently live
+            </span>
+
+        </div>
+    </div>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header>
+        <div class="nav">
+
+            <div class="logo">
+                DOOMS DAY QCAB
+            </div>
+
+            <div class="tagline">
+                UPSC Answer Writing Practice
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================
+         HERO
+    ========================================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                BUILT FOR UPSC ANSWER WRITING
+            </div>
+
+            <h1>
+                <span>Dooms Day QCAB Generator</span>
+            </h1>
+
+            <p>
+                A focused platform for practicing UPSC questions in a
+                structured QCAB format — helping you move from preparation
+                to actual answer writing.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             PROBLEMS
+        ====================================== -->
+
+        <section>
+
+            <div class="section-label">
+                THE PROBLEM
+            </div>
+
+            <h2 class="section-title">
+                Answer writing should not be<br>
+                the part we keep postponing.
+            </h2>
+
+            <p class="section-description">
+                The problem is not a lack of study material. The problem is
+                having the right questions, in the right format, at the right
+                stage of preparation.
+            </p>
+
+
+            <div class="problem-grid">
+
+                <div class="problem-card">
+
+                    <div class="problem-number">
+                        PROBLEM 01
+                    </div>
+
+                    <h3>
+                        We tend to postpone answer writing
+                    </h3>
+
+                    <p>
+                        Answer writing often gets pushed aside because we do
+                        not have properly curated questions relevant to our
+                        stage of preparation. Instead, we remain dependent on
+                        external frameworks and wait for the "right" time to
+                        start practicing.
+                    </p>
+
+                </div>
+
+
+                <div class="problem-card">
+
+                    <div class="problem-number">
+                        PROBLEM 02
+                    </div>
+
+                    <h3>
+                        We do not have an easy QCAB format
+                    </h3>
+
+                    <p>
+                        Practicing questions should be simple and repeatable.
+                        But without a convenient QCAB format, creating a
+                        question set and getting into the habit of writing
+                        answers becomes unnecessarily difficult.
+                    </p>
+
+                </div>
+
+
+                <div class="problem-card">
+
+                    <div class="problem-number">
+                        PROBLEM 03
+                    </div>
+
+                    <h3>
+                        Preparation is fragmented away from PYQs
+                    </h3>
+
+                    <p>
+                        PYQs, answer-writing practice and UPSC-format answer
+                        pages often remain in separate silos. The most
+                        relevant questions — actual UPSC PYQs — are therefore
+                        not naturally integrated into our regular answer
+                        writing practice.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             SOLUTION
+        ====================================== -->
+
+        <section class="solution">
+
+            <div class="section-label">
+                THE SOLUTION
+            </div>
+
+            <h2 class="section-title">
+                One place to generate.<br>
+                One place to practice.
+            </h2>
+
+            <p class="section-description">
+                Dooms Day QCAB Generator brings question selection and answer
+                writing practice together so that you can practice questions
+                relevant to exactly where you are in your preparation.
+            </p>
+
+
+            <div class="solution-box">
+
+                <div class="solution-content">
+
+                    <h3>
+                        Meet Dooms Day QCAB Generator
+                    </h3>
+
+                    <p>
+                        Generate unlimited QCABs based on your preferred
+                        subject, paper, topic and year. Use PYQs as the foundation
+                        and practice in a format designed to make regular answer
+                        writing easier.
+                    </p>
+
+
+                    <div class="feature-pills">
+
+                        <div class="pill">
+                            Subject-wise
+                        </div>
+
+                        <div class="pill">
+                            Paper-wise
+                        </div>
+
+                        <div class="pill">
+                            Topic-wise
+                        </div>
+
+                        <div class="pill">
+                            Year-wise
+                        </div>
+
+                        <div class="pill">
+                            PYQ-based
+                        </div>
+
+                        <div class="pill">
+                            Actual UPSC QCAB format
+                        </div>
+
+                        <div class="pill">
+                            Unlimited QCABs
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     DID YOU KNOW
+                ================================== -->
+
+                <div class="did-you-know">
+
+                    <div class="did-you-know-label">
+                        DID YOU KNOW?
+                    </div>
+
+                    <h4>
+                        Most aspirants study.
+                        Far fewer actually write.
+                    </h4>
+
+                    <p>
+                        Only <strong>20% of UPSC Mains aspirants</strong>
+                        actively practice writing tests or mock answers
+                        during their preparation.
+                    </p>
+
+                    <p style="margin-top: 10px;">
+                        Mentorship data indicates that a vast majority of
+                        students focus entirely on reading and studying theory,
+                        leaving only about one-fifth engaging in active test
+                        writing.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             HOW IT WORKS
+        ====================================== -->
+
+        <section>
+
+            <div class="section-label">
+                HOW IT WORKS
+            </div>
+
+            <h2 class="section-title">
+                Three steps. Simple process.
+            </h2>
+
+            <p class="section-description">
+                Select the questions you want. Generate your QCAB.
+                Start writing
+            </p>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Create free account
+                    </h3>
+
+                    <p>
+                        Choose your subject, paper, topic or year and select
+                        the questions you want to practice.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Generate your QCAB
+                    </h3>
+
+                    <p>
+                        Generate your QCAB instantly with the questions
+                        arranged and ready for practice.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Write Write Write
+                    </h3>
+
+                    <p>
+                        Put pen to paper and practice answering questions
+                        in an environment closer to the actual UPSC exam.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             SUBJECTS
+        ====================================== -->
+
+        <section
+            class="subjects"
+            id="subjects-section"
+        >
+
+            <div class="section-label">
+                SUBJECTS
+            </div>
+
+            <h2 class="section-title">
+                Choose your battlefield.
+            </h2>
+
+            <p class="section-description">
+                
+            </p>
+
+
+            <div class="subject-grid">
+
+                <!-- Anthropology -->
+
+                <div class="subject-card">
+
+                    <div>
+
+                        <div class="subject-name">
+                            Anthropology
+                        </div>
+
+                        <div class="subject-status live">
+                            ● LIVE
+                        </div>
+
+                    </div>
+
+                    <a
+                        class="subject-button"
+                        href="https://sankalpkgaidhani-art.github.io/anthropology_qcab/"
+                    >
+                        Open Generator →
+                    </a>
+
+                </div>
+
+
+                <!-- GS -->
+
+                <div class="subject-card">
+
+                    <div>
+
+                        <div class="subject-name">
+                            GS
+                        </div>
+
+                        <div class="subject-status">
+                            COMING SOON
+                        </div>
+
+                    </div>
+
+                    <div class="subject-button disabled">
+                        Coming Soon
+                    </div>
+
+                </div>
+
+
+                <!-- PSIR -->
+
+                <div class="subject-card">
+
+                    <div>
+
+                        <div class="subject-name">
+                            PSIR
+                        </div>
+
+                        <div class="subject-status">
+                            COMING SOON
+                        </div>
+
+                    </div>
+
+                    <div class="subject-button disabled">
+                        Coming Soon
+                    </div>
+
+                </div>
+
+
+                <!-- Sociology -->
+
+                <div class="subject-card">
+
+                    <div>
+
+                        <div class="subject-name">
+                            Sociology
+                        </div>
+
+                        <div class="subject-status">
+                            COMING SOON
+                        </div>
+
+                    </div>
+
+                    <div class="subject-button disabled">
+                        Coming Soon
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        © 2026 Dooms Day QCAB Generator ·
+        Built for UPSC Answer Writing
+
+    </footer>
+
+
+    <!-- =========================================
+         SCROLL REVEAL
+    ========================================= -->
+
+    <script>
+
+        const revealElements = document.querySelectorAll(
+            ".problem-card, .solution-box, .step, .subject-card"
+        );
+
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("visible");
+
+                    } else {
+
+                        entry.target.classList.remove("visible");
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+
+        revealElements.forEach((element) => {
+
+            observer.observe(element);
+
+        });
+
+    </script>
+
+</body>
+</html>
+
